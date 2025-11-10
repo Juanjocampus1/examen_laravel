@@ -13,26 +13,24 @@ class CategoriaController extends Controller
         return view('categorias.index', compact('categorias'));
     }
 
+    public function create()
+    {
+        return view('categorias.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|unique:categorias|max:255',
             'descripcion' => 'nullable',
-            'fabricante' => 'required|unique:fabricante|max:255',
-            'modelo' => 'nullable',
+            'fabricante' => 'nullable',
+            'modelo' => 'nullable'
         ]);
 
-        $categoria = Categoria::create([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'fabricante' => $request->fabricante,
-            'modelo' => $request->modelo
-        ]);
+        Categoria::create($request->all());
 
-        return response()->json([
-            'message' => 'Categoría creada exitosamente',
-            'categoria' => $categoria
-        ], 201);
+        return redirect()->route('categorias.index')
+            ->with('success', 'Categoría creada exitosamente.');
     }
 
     /**
@@ -52,9 +50,5 @@ class CategoriaController extends Controller
         }
 
         return view('categorias.show', compact('categoria'));
-    }
-
-    public function create(){
-        return view('categorias.create');
     }
 }

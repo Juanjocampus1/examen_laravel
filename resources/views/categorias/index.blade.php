@@ -35,10 +35,37 @@
             color: #666;
             font-style: italic;
         }
+        .btn-create {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .btn-create:hover {
+            background-color: #218838;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Lista de Categorías</h1>
+
+    @if(session('success'))
+        <div class="success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <a href="{{ url('/categorias/create') }}" class="btn-create">+ Nueva Categoría</a>
 
     @if(count($categorias) > 0)
         <ul class="categoria-list">
